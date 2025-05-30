@@ -14,24 +14,42 @@ header {
   color: #fff; /* White text for contrast */
   padding: 40px 0; /* Top and bottom padding */
   text-align: center; /* Center all content */
+  position: relative;
+  transition: padding 0.3s cubic-bezier(0.4,0,0.2,1);
 }
 
-header div {
-  /* Flexbox to align items vertically and center them */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+header.small {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+header .intel-logo-left {
+  position: absolute;
+  top: -25px;
+  left: 25px;
+  width: 120px;
+  z-index: 10;
+}
+
+@media (max-width: 700px) {
+  header .intel-logo-left {
+    position: static;
+    display: block;
+    margin: 0 auto 16px auto;
+    left: auto;
+    top: auto;
+  }
 }
 
 header img {
   /* Logo styling */
   width: 120px;
-  margin-bottom: 20px;
+  margin-bottom: 0;
 }
 
 header h1 {
   font-size: 2.5em;
+  /* Remove margin that previously shifted text down */
   margin: 10px 0 15px 0;
   font-weight: 700;
   letter-spacing: 1px;
@@ -42,6 +60,13 @@ header p {
   max-width: 500px;
   margin: 0 auto;
   color: #e0f7fa; /* Lighter blue for extra contrast */
+  /* Remove margin-top that previously shifted text down */
+}
+
+/* Nudge hero heading and subtitle down together using .auto-align */
+.auto-align {
+  position: relative;
+  top: 35px; /* Adjust as needed to align with the bottom of the Intel logo */
 }
 
 /* Timeline section styles */
@@ -121,15 +146,24 @@ section div img {
   border: 1.5px solid #e3f0fb;
   background: #fff;
   box-shadow: 0 8px 32px rgba(0,113,197,0.13), 0 2px 8px rgba(0,166,224,0.10);
-  transition: box-shadow 0.3s, transform 0.3s, border-color 0.3s;
-  padding: 0;
+  transition: box-shadow 0.9s, transform 0.9s, border-color 0.9s;
+  transition-duration: 0.4s;
+  outline: none;
+}
+
+section.timeline div img:focus,
+section.timeline-cards div img:focus,
+section div img:focus {
+  box-shadow: 0 0 0 4px #0071c5, 0 16px 48px rgba(0,113,197,0.18), 0 6px 24px rgba(0,166,224,0.12);
+  border-color: #0071c5;
+  z-index: 3;
 }
 
 section.timeline div:hover img,
 section.timeline-cards div:hover img,
 section div:hover img {
   box-shadow: 0 16px 48px rgba(0,113,197,0.18), 0 6px 24px rgba(0,166,224,0.12);
-  transform: scale(1.04);
+  transform: scale(1.08); /* Slightly scale up the image on hover */
   border-color: #b3e0fc;
 }
 
@@ -331,6 +365,15 @@ section.reflection h2 {
   overflow: hidden;
   padding: 0;
   transition: box-shadow 0.3s, border-color 0.3s;
+    outline: none; /* Remove default outline for custom focus style */
+}
+
+.image-container:focus,
+.image-container:hover {
+  /* Soft Intel blue border and subtle highlight on focus/hover */
+  border-color: #0071c5;
+  box-shadow: 0 0 0 3px #e3f0fb;
+  z-index: 2;
 }
 
 .image-container img {
@@ -344,36 +387,278 @@ section.reflection h2 {
   padding: 0;
   background: none;
   transition: transform 0.3s;
+  outline: none; /* Remove default outline for custom focus style */
 }
 
-.image-container:hover {
+.image-container img:focus,
+.image-container img:hover {
+  /* Soft Intel blue border and subtle highlight on focus/hover */
+  border: 1.5px solid #0071c5;
+  box-shadow: 0 0 0 3px #e3f0fb;
+  z-index: 2;
+  background: #f5faff;
+}
+
+/* Hide subheading (h3) by default */
+.image-container + h3 {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s, opacity 0.4s;
+  color: #00a6e0;
+  background: #f5faff;
+  border-radius: 8px;
+  margin: 0 auto 10px auto;
+  padding: 0 8px;
+  font-weight: 500;
+  font-size: 1.1em;
+  font-family: 'Roboto', Arial, sans-serif;
+  box-shadow: none;
+}
+
+/* Reveal subheading on focus/hover of container or image */
+.image-container:focus + h3,
+.image-container:hover + h3,
+.image-container img:focus + h3,
+.image-container img:hover + h3 {
+  max-height: 60px;
+  opacity: 1;
+  padding: 8px 8px;
+}
+
+@media (max-width: 700px) {
+  .image-container + h3 {
+    font-size: 1em;
+    padding: 0 6px;
+  }
+}
+
+/* Hide card text by default and reveal on hover for carousel timeline cards */
+#timelineCarousel .card-text-container {
+  /* Smoother, slower transition for reveal */
+  max-height: none;
+  opacity: 1;
+  transition: none;
+  padding: 0;
+}
+#timelineCarousel .card-text {
+  transition: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Remove scaling on hover for carousel cards */
+#timelineCarousel .card {
+  height: 400px;
+  max-width: 320px;
+  min-width: 260px;
+  width: 300px;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+}
+#timelineCarousel .card-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex: 1 1 auto;
+  transition: transform 0.4s ease;
+  will-change: transform;
+}
+#timelineCarousel .card-img-top {
+  height: 140px;
+  width: 100%;
+  object-fit: contain;
+  object-position: center;
+  margin-bottom: 0.5rem;
+  border-radius: 12px;
+  background: #fff;
+}
+#timelineCarousel .card-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+#timelineCarousel .card-title,
+#timelineCarousel .card-subtitle {
+  margin-bottom: 0.25rem;
+}
+#timelineCarousel .card-text-container {
+  max-height: none;
+  opacity: 1;
+  transition: none;
+  padding: 0;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: flex-end;
+}
+#timelineCarousel .card-text {
+  transition: none;
+  padding: 0;
+  margin: 0;
+}
+#timelineCarousel .card:hover .card-inner,
+#timelineCarousel .card:focus-within .card-inner {
+  transform: scale(1.05);
+}
+#timelineCarousel .card:hover,
+#timelineCarousel .card:focus-within {
+  box-shadow: 0 12px 36px rgba(0,113,197,0.20), 0 4px 16px rgba(0,166,224,0.12);
+  z-index: 2;
+}
+#timelineCarousel .card:hover img,
+#timelineCarousel .card:focus-within img {
+  transform: none;
   box-shadow: 0 16px 48px rgba(0,113,197,0.18), 0 6px 24px rgba(0,166,224,0.12);
   border-color: #b3e0fc;
 }
 
-.image-container:hover img {
-  transform: scale(1.04);
+/* Timeline Carousel: Prevent jumping and ensure uniform card height */
+#timelineCarousel .carousel-inner {
+  height: 450px; /* fixed total height for the carousel */
+}
+#timelineCarousel .carousel-item {
+  height: 100%; /* fill the parent height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#timelineCarousel .carousel-item .d-flex {
+  height: 100%;
+  gap: 1rem; /* space between cards */
+}
+#timelineCarousel .card {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+#timelineCarousel .card-body {
+  flex: 1 1 auto;
+  overflow-y: auto; /* allow scrolling if text is long */
+}
+/* Slow down the carousel slide transition for a smoother effect */
+.carousel-item {
+  transition: transform 0.8s ease;
 }
 
 @media (max-width: 700px) {
-  .image-container {
-    width: 100%;
-    max-width: 240px;
-    height: 160px;
-    margin: 0 auto 14px auto;
-    display: flex;
+  #timelineCarousel .d-flex.justify-content-center {
+    flex-direction: column !important;
     align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    padding: 0;
+    gap: 1.5rem;
   }
-  .image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    border-radius: 12px;
-    background: none;
-    box-shadow: none;
-    padding: 0;
+  #timelineCarousel .card {
+    width: 95vw;
+    min-width: 0;
+    max-width: 98vw;
+    height: 340px;
+    margin-bottom: 1.5rem;
   }
+  #timelineCarousel .card-img-top {
+    height: 100px;
+  }
+  #timelineCarousel .card-body {
+    padding: 0.75rem 0.5rem;
+  }
+  #timelineCarousel .card-title,
+  #timelineCarousel .card-subtitle {
+    font-size: 1.1em;
+  }
+  #timelineCarousel .card-text {
+    font-size: 1em;
+  }
+  #post-carousel {
+    margin-top: 2rem;
+  }
+  .container.text-center.my-5 {
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+  }
+  footer.text-center.p-4.mt-5 {
+    padding: 1.5rem 0.5rem !important;
+    font-size: 1em;
+  }
+}
+
+/* Make carousel controls easier to tap on mobile */
+@media (max-width: 700px) {
+  #timelineCarousel .carousel-control-prev,
+  #timelineCarousel .carousel-control-next {
+    width: 3rem;
+    height: 3rem;
+    top: 40%;
+  }
+  #timelineCarousel .carousel-control-prev-icon,
+  #timelineCarousel .carousel-control-next-icon {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+}
+
+/* Add a hover effect to all 'Learn More' buttons */
+.btn-primary:hover, .btn-primary:focus {
+  background-color: #3399e6 !important; /* lighter Intel blue on hover */
+  border-color: #3399e6 !important;
+  color: #fff !important;
+  box-shadow: 0 4px 16px rgba(0,113,197,0.15);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+/* FAQ Section Styles */
+#faq summary {
+  padding: 0.75em 1em;
+  border: 1.5px solid #0071c5;
+  border-radius: 6px;
+  color: #0071c5; /* Intel blue */
+  background: #f5faff; /* Light blue background */
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.2s, border-color 0.2s;
+}
+#faq summary:focus,
+#faq summary:hover {
+  background: #e3f0fb;
+  border-color: #005b99;
+}
+#faq details[open] summary {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+#faq p {
+  padding: 1em 1.2em;
+  border-top: 1.5px solid #0071c5;
+  background: #e3f0fb; /* Lighter blue background */
+  color: #00447b; /* Dark blue text */
+  margin: 0;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  font-size: 1em;
+}
+
+/* Hide carousel and show stacked timeline on small screens */
+@media (max-width: 700px) {
+  #timelineCarousel {
+    display: none !important;
+  }
+  #timelineStack {
+    display: block !important;
+  }
+}
+@media (min-width: 701px) {
+  #timelineStack {
+    display: none !important;
+  }
+}
+
+/* Force timeline carousel text to RTL and right-align in RTL mode */
+html[dir="rtl"] #timelineCarousel .carousel-item,
+html[dir="rtl"] #timelineCarousel .carousel-item h4,
+html[dir="rtl"] #timelineCarousel .carousel-item h5,
+html[dir="rtl"] #timelineCarousel .carousel-item p {
+  direction: rtl !important;
+  text-align: right !important;
 }
