@@ -356,9 +356,9 @@
     <!-- Subscription Form inside Footer -->
     <form class="text-center mb-4 mx-auto" style="width:100%; max-width:400px;">
       <!-- Label for accessibility -->
-      <label for="subscribeEmail" class="form-label mb-2">Receive Intel Sustainability Updates</label>
+      <label for="subscribeEmail" class="form-label mb-2" id="subscribeEmailLabel">Receive Intel Sustainability Updates</label>
       <!-- Email input field -->
-      <input type="email" class="form-control rounded mb-3 mx-auto" id="subscribeEmail" placeholder="Enter your email" style="max-width: 350px;" required>
+      <input type="email" class="form-control rounded mb-3 mx-auto" id="subscribeEmail" placeholder="Enter your email" style="max-width: 350px;" required aria-label="Email address for Intel Sustainability Updates" aria-describedby="subscribeEmailLabel" autocomplete="email">
       <!-- Subscribe button -->
       <button type="submit" class="btn btn-primary rounded">Subscribe</button>
     </form>
