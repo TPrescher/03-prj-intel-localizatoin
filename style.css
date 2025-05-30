@@ -662,3 +662,194 @@ html[dir="rtl"] #timelineCarousel .carousel-item p {
   direction: rtl !important;
   text-align: right !important;
 }
+
+/* RTL Support Fixes for Timeline Carousel, Cards, and FAQ */
+
+/*
+  These rules help flip left/right paddings, margins, and border radii for RTL languages.
+  We use logical properties and RTL overrides so the layout works in both directions.
+*/
+
+html[dir="rtl"] section.timeline div,
+html[dir="rtl"] section.timeline-cards div,
+html[dir="rtl"] section div {
+  /* Flip left/right paddings and margins for RTL */
+  padding-inline-start: 20px;
+  padding-inline-end: 20px;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}
+
+html[dir="rtl"] #timelineCarousel .card {
+  /* Flip card alignment for RTL */
+  text-align: right;
+}
+
+html[dir="rtl"] #timelineCarousel .card-body {
+  /* Make sure card body text is right-aligned in RTL */
+  text-align: right;
+}
+
+html[dir="rtl"] #timelineCarousel .card-title,
+html[dir="rtl"] #timelineCarousel .card-subtitle {
+  text-align: right;
+}
+
+html[dir="rtl"] #timelineCarousel .card-text {
+  text-align: right;
+}
+
+html[dir="rtl"] #timelineCarousel .carousel-item .d-flex {
+  /* Flip flex direction for carousel cards in RTL */
+  flex-direction: row-reverse;
+}
+
+html[dir="rtl"] section.timeline,
+html[dir="rtl"] section.timeline-cards,
+html[dir="rtl"] section {
+  /* Flip flex direction for timeline/stacked cards in RTL */
+  flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .image-container + h3 {
+  /* Flip subheading alignment for RTL */
+  text-align: right;
+}
+
+html[dir="rtl"] #faq summary {
+  /* Flip FAQ summary padding for RTL */
+  padding-inline-start: 1em;
+  padding-inline-end: 0.75em;
+  text-align: right;
+}
+
+html[dir="rtl"] #faq p {
+  /* Flip FAQ answer alignment for RTL */
+  text-align: right;
+}
+
+/*
+  Use logical border radius for FAQ summary so corners flip in RTL.
+  This helps the open/close animation look correct in both directions.
+*/
+html[dir="rtl"] #faq details[open] summary {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 6px;
+}
+
+/*
+  For mobile: flip column stacking for timeline/stacked cards in RTL.
+*/
+@media (max-width: 700px) {
+  html[dir="rtl"] section.timeline,
+  html[dir="rtl"] section.timeline-cards,
+  html[dir="rtl"] section {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  html[dir="rtl"] section.timeline div,
+  html[dir="rtl"] section.timeline-cards div,
+  html[dir="rtl"] section div {
+    text-align: right;
+  }
+}
+
+/*
+  Make sure carousel controls flip sides in RTL (Bootstrap 5 does this, but we add extra specificity for custom controls if needed)
+*/
+html[dir="rtl"] #timelineCarousel .carousel-control-prev {
+  right: 0;
+  left: auto;
+}
+html[dir="rtl"] #timelineCarousel .carousel-control-next {
+  left: 0;
+  right: auto;
+}
+
+/*
+  For scrollbars: flip direction for horizontal scrolling in RTL.
+*/
+html[dir="rtl"] section.timeline,
+html[dir="rtl"] section.timeline-cards,
+html[dir="rtl"] section {
+  direction: rtl;
+}
+
+/*
+  For LTR, ensure direction is set back to ltr for timeline if needed.
+*/
+html[dir="ltr"] section.timeline,
+html[dir="ltr"] section.timeline-cards,
+html[dir="ltr"] section {
+  direction: ltr;
+}
+
+/* --- RTL/LTR logical property fixes for timeline carousel and cards --- */
+
+/* Use logical properties for card padding and margin */
+#timelineCarousel .card,
+section.timeline div,
+section.timeline-cards div,
+section div {
+  /* Use logical margin and padding for RTL/LTR support */
+  margin-inline: 0; /* replaces margin-left/right */
+  padding-inline: 20px; /* replaces padding-left/right */
+}
+
+/* Use logical border radius for cards and images */
+#timelineCarousel .card,
+#timelineCarousel .card-img-top,
+section.timeline div,
+section.timeline-cards div,
+section div,
+section.timeline div img,
+section.timeline-cards div img,
+section div img {
+  border-start-start-radius: 12px;
+  border-end-start-radius: 12px;
+  border-start-end-radius: 12px;
+  border-end-end-radius: 12px;
+}
+
+/* RTL: Flip carousel controls and card alignment */
+html[dir="rtl"] #timelineCarousel .carousel-item {
+  flex-direction: row-reverse !important; /* Flip card order */
+}
+html[dir="rtl"] #timelineCarousel .d-flex.justify-content-center {
+  flex-direction: row-reverse !important;
+}
+html[dir="rtl"] #timelineCarousel .carousel-control-prev {
+  right: 0;
+  left: auto;
+}
+html[dir="rtl"] #timelineCarousel .carousel-control-next {
+  left: 0;
+  right: auto;
+}
+
+/* RTL: Use logical text alignment for all card text */
+html[dir="rtl"] #timelineCarousel .card-title,
+html[dir="rtl"] #timelineCarousel .card-subtitle,
+html[dir="rtl"] #timelineCarousel .card-text,
+html[dir="rtl"] section.timeline div h2,
+html[dir="rtl"] section.timeline-cards div h2,
+html[dir="rtl"] section.timeline div h3,
+html[dir="rtl"] section.timeline-cards div h3 {
+  text-align: right !important;
+}
+
+/* RTL: Use logical scrollbar direction for timeline */
+html[dir="rtl"] section.timeline,
+html[dir="rtl"] section.timeline-cards,
+html[dir="rtl"] section {
+  direction: rtl;
+  unicode-bidi: embed;
+}
+
+/* RTL: FAQ section alignment */
+html[dir="rtl"] #faq summary,
+html[dir="rtl"] #faq p {
+  text-align: right;
+}
+
+/* --- End RTL/LTR fixes --- */
