@@ -16,10 +16,10 @@ document.addEventListener('DOMContentLoaded', function() {
   // 4. Toggle alignment classes on .auto-align elements
   document.querySelectorAll('.auto-align').forEach(function(el) {
     if (isRTL) {
-      el.classList.add('text-end', 'ms-auto');
+      el.classList.add('text-end', 'ms-auto'); // text to end, margin start auto
       el.classList.remove('text-start', 'me-auto');
     } else {
-      el.classList.add('text-start', 'me-auto');
+      el.classList.add('text-start', 'me-auto'); // text to start, margin end auto
       el.classList.remove('text-end', 'ms-auto');
     }
   });
@@ -35,16 +35,18 @@ document.addEventListener('DOMContentLoaded', function() {
     var prev = carousel.querySelector('.carousel-control-prev');
     var next = carousel.querySelector('.carousel-control-next');
     if (isRTL) {
-      // Swap classes so arrows point correctly in RTL
-      if (prev) prev.classList.replace('carousel-control-prev', 'carousel-control-next');
-      if (next) next.classList.replace('carousel-control-next', 'carousel-control-prev');
+      // In RTL, swap the classes so arrows point correctly
+      if (prev && next) {
+        prev.classList.remove('carousel-control-prev');
+        prev.classList.add('carousel-control-next');
+        next.classList.remove('carousel-control-next');
+        next.classList.add('carousel-control-prev');
+      }
     } else {
-      // Ensure correct classes in LTR
-      if (prev) {
+      // In LTR, ensure correct classes
+      if (prev && next) {
         prev.classList.add('carousel-control-prev');
         prev.classList.remove('carousel-control-next');
-      }
-      if (next) {
         next.classList.add('carousel-control-next');
         next.classList.remove('carousel-control-prev');
       }
@@ -62,14 +64,23 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Force timeline carousel text to RTL and right-align in RTL mode (JS fallback for dynamic content)
-  if (document.documentElement.dir === 'rtl') {
+  // 8. Force timeline carousel text to RTL and right-align in RTL mode (JS fallback for dynamic content)
+  if (isRTL) {
     document.querySelectorAll('#timelineCarousel .carousel-item').forEach(function(item) {
       item.style.direction = 'rtl';
       item.style.textAlign = 'right';
       item.querySelectorAll('h4, h5, p').forEach(function(child) {
         child.style.direction = 'rtl';
         child.style.textAlign = 'right';
+      });
+    });
+  } else {
+    document.querySelectorAll('#timelineCarousel .carousel-item').forEach(function(item) {
+      item.style.direction = 'ltr';
+      item.style.textAlign = 'left';
+      item.querySelectorAll('h4, h5, p').forEach(function(child) {
+        child.style.direction = 'ltr';
+        child.style.textAlign = 'left';
       });
     });
   }
