@@ -898,3 +898,43 @@ html[dir="rtl"] #faq p {
 
 /* Modern image format support: no CSS needed, but keep for reference */
 /* Use <picture> in HTML for WebP/PNG fallback */
+
+/* Make .btn-primary buttons in .col-12.col-md-4 columns square, with square corners, align at the bottom, and keep text on one line */
+.col-12.col-md-4 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+.col-12.col-md-4 .btn-primary {
+  width: 120px; /* Wider square for text */
+  height: 48px;
+  min-width: 120px;
+  min-height: 48px;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  margin-bottom: 0.5em;
+  font-size: 1.1em;
+  font-weight: 600;
+  padding: 0 1em;
+  box-sizing: border-box;
+  white-space: nowrap; /* Prevent text from stacking */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 700px) {
+  .col-12.col-md-4 {
+    align-items: stretch;
+  }
+  .col-12.col-md-4 .btn-primary {
+    width: 100%;
+    min-width: 0;
+    height: 48px;
+    min-height: 48px;
+    font-size: 1em;
+    border-radius: 0;
+  }
+}
