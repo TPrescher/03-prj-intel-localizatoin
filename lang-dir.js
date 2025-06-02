@@ -9,9 +9,14 @@ document.addEventListener('DOMContentLoaded', function() {
     return userLang.toLowerCase().startsWith(code);
   });
 
-  // 3. Set <html dir="rtl"> or "ltr"
+  // 3. Set <html dir="rtl"> or "ltr" and set lang attribute for accessibility
   var html = document.documentElement;
   html.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
+  // Set lang attribute to user's language (e.g., 'en', 'ar')
+  if (userLang) {
+    // Use only the language code (e.g., 'en' from 'en-US')
+    html.setAttribute('lang', userLang.split('-')[0]);
+  }
 
   // 4. Toggle alignment classes on .auto-align elements
   document.querySelectorAll('.auto-align').forEach(function(el) {
